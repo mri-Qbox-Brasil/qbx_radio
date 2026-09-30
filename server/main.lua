@@ -8,9 +8,9 @@ exports.qbx_core:CreateUseableItem('radio', function(source)
 end)
 
 if not config.whitelistSubChannels then
-    for channel, jobs in pairs(restrictedChannels) do
+    for channel, v in ipairs(restrictedChannels) do
         for i = 1, 99 do
-            restrictedChannels[channel + (i / 100)] = jobs
+            restrictedChannels[channel + (i / 100)] = v
         end
     end
 end
@@ -21,3 +21,9 @@ for channel, jobs in pairs(restrictedChannels) do
         return jobs[player.PlayerData.job.name] and player.PlayerData.job.onduty
     end)
 end
+
+RegisterNetEvent('qbx_radio:server:setHoldingRadio', function(bool)
+    local src = source
+    if type(bool) ~= 'boolean' then return end
+    Player(src).state.isHoldingRadio = bool
+end)
